@@ -1,19 +1,49 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { View, Text, Image, TouchableWithoutFeedback, TouchableOpacity, StyleSheet } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 import globalStyles from '../../theme/globalStyles'
+import { likeProductAction } from '../../redux/actions/productAction';
+import { useDispatch } from 'react-redux'
+import ModalMessage from '../../component/ModalMessage';
+import FontAwesome from 'react-native-vector-icons/FontAwesome'
+
 
 const ProductItem = (params) => {
 
     const navigator = useNavigation();
+    const dispatch = useDispatch();
+    const [modalVisibleLike, setModalVisibleLike] = useState(false);
+
 
     const navigationProductDetail = (id) => {
         console.log(id);
-        navigator.navigate("DetailProductScreen", { id ,'categoryName':params.categoryName });
+        navigator.navigate("DetailProductScreen", { id, 'categoryName': params.categoryName });
+    }
+
+    useEffect(() => {
+        if (modalVisibleLike) {
+            var timer = setTimeout(() => {
+                setModalVisibleLike(false);
+            }, 800);
+        }
+        return () => {
+            clearTimeout(timer);
+        }
+    }, [modalVisibleLike])
+
+    const likeProduct = async (product) => {
+        var result = await dispatch(likeProductAction(product));
+        if (!!result && result)
+            setModalVisibleLike(result);
     }
 
     return (
         <>
+            <ModalMessage animationType="fade"
+                visible={modalVisibleLike}
+                message='Đã thêm vào SP yêu thích'
+                icon='gratipay'
+            ></ModalMessage>
             <View style={[styles.itemContainer, { width: params.widthItem, height: params.widthItem * 1.2 }]}>
                 <TouchableWithoutFeedback onPress={() => navigationProductDetail(params.item.id)}>
                     <View style={{ flex: 1, paddingLeft: 15, paddingRight: 5 }}>
@@ -30,8 +60,8 @@ const ProductItem = (params) => {
                 </TouchableWithoutFeedback>
                 <View style={{ paddingLeft: 15, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                     <Text style={styles.priceText}>${params.item.price}</Text>
-                    <TouchableOpacity onPress={() => console.log("Add to Cart button press")} style={styles.plusButton}>
-                        <Text style={styles.textButton}>+</Text>
+                    <TouchableOpacity onPress={() => likeProduct(params.item)} style={styles.plusButton}>
+                        <FontAwesome name='heart' size={18} color='#FFF' />
                     </TouchableOpacity>
                 </View>
             </View>

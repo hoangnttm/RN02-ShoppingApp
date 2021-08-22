@@ -22,6 +22,12 @@ const CatelogyDetailScreen = (props) => {
             console.log(`Tab ${props.params.alias} unmount`);
         }
     }, [])
+
+ 
+
+
+
+
     const _renderItem = ({ item }) => {
        return (<ProductItem categoryName={category.id} item={item} widthItem={productItemWidth} />)
     };

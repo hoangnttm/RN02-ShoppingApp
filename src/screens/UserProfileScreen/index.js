@@ -48,7 +48,9 @@ const UserProfileScreen = () => {
     const navigateUserInforScreen = () => {
         navigator.navigate("UserInfoScreen");
     };
-
+    const navigateHistoryOrderScreen = () => {
+        navigator.navigate("HistoryOrderScreen");
+    };
     const logOut = () => {
         removeAccessToken();
         dispatch({ type: 'LOGOUT' })
@@ -200,7 +202,7 @@ const UserProfileScreen = () => {
             </View>
             <View style={{ height: 1, backgroundColor: 'black', marginHorizontal: 15 }}></View>
             <View style={{ marginTop: 15 }}>
-                <TouchableOpacity style={styles.menuButtonStyle}>
+                <TouchableOpacity style={styles.menuButtonStyle} onPress={navigateHistoryOrderScreen}>
                     <View style={styles.menuButtonContentStyle}>
                         <View style={styles.iconButtonContentStyle}>
                             <FontAwesome5 name={'store-alt'} size={20} color={primaryColor}></FontAwesome5>

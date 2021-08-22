@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { LoginScreen, SignupScreen, ProductDetail, UserInfo } from '../screens/index';
+import { LoginScreen, SignupScreen, ProductDetail, UserInfo, HistoryOrder } from '../screens/index';
 import { getAccessToken } from '../ultils/storage';
 import { getAccessTokenSelector, getWasLogginStatusSelector } from '../redux/selectors/loginSelector';
 import { useDispatch, useSelector } from 'react-redux';
@@ -52,6 +52,7 @@ const RootNavigation = (state) => {
               <Stack.Screen name="HomeScreen" component={rootTabNavigation} />
               <Stack.Screen name="DetailProductScreen" component={ProductDetail} />
               <Stack.Screen name="UserInfoScreen" component={UserInfo} />
+              <Stack.Screen name="HistoryOrderScreen" component={HistoryOrder} />
             </>
           )}
       </Stack.Navigator>

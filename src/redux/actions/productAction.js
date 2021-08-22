@@ -9,13 +9,13 @@ export const likeProduct = payload => ({ type: LIKE_PRODUCT, payload });
 export const unlikeProduct = payload => ({ type: UNLIKE_PRODUCT, payload });
 export const fetchProductsFavourite = payload => ({ type: FETCH_PRODUCT_FAVOURITE, payload });
 
-export const likeProductAction = id => {
-    return dispatch=> likeProductAPI(id)
+export const likeProductAction = (product) => {
+    const {id} =product;
+    return dispatch => likeProductAPI({id})
         .then(res => {
-            console.info(res.data);
             if(res.data.statusCode==200)
             {
-                dispatch(likeProduct(id));
+                dispatch(likeProduct(product));
                 return true;
             }
             return false;

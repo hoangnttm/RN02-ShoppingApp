@@ -70,9 +70,9 @@ const ProductDetail = (props) => {
         }
     }, [modalVisibleFavourite])
 
-    const likeProduct = (id) => {
-        console.log(id);
-        dispatch(likeProductAction(id));
+    const likeProduct = (product) => {
+        console.log(product);
+        dispatch(likeProductAction(product));
         setModalVisibleFavourite(true);
     }
     return (

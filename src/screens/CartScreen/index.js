@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import { View, Modal, Text, StyleSheet, TouchableOpacity, TouchableHighlight, Image } from 'react-native'
+import { View,  Text, StyleSheet, TouchableOpacity, TouchableHighlight, Image } from 'react-native'
 import { SwipeListView } from 'react-native-swipe-list-view';
 import { useSelector, useDispatch } from 'react-redux'
 import { getProductInCart, getProductInCartChanged } from '../../redux/selectors/cartSelector';
 import globalStyles, { primaryColor, secondColor, textColor } from '../../theme/globalStyles';
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import {  useNavigation } from '@react-navigation/native';
 import { orderAction, removeProductFromCartAction } from '../../redux/actions/cartAction';
 import ModalMessage from '../../component/ModalMessage';
 import { likeProductAction } from '../../redux/actions/productAction';
 const CartScreen = (state) => {
-    // const carts = useSelector(getProductInCart);
     const isCartsChanged = useSelector(getProductInCartChanged);
     const carts = useSelector(getProductInCart);
     const [total, setTotalPrice] = useState(0);
@@ -65,14 +64,14 @@ const CartScreen = (state) => {
 
         var products = carts.map(getProductInCarts);
         console.log(products);
-        var result = await orderAction(products);
+        var result = await dispatch(orderAction(products));
         console.info(result);
         if (result)
             setModalVisible(true);
 
     };
-    const likeProduct = async ({ id }) => {
-        var result = await dispatch(likeProductAction(id));
+    const likeProduct = async (product) => {
+        var result = await dispatch(likeProductAction(product));
         if (!!result && result)
             setModalVisibleLike(result);
     }
