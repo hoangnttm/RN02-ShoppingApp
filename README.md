@@ -1,6 +1,6 @@
 # RN02-ShoppingApp
-The Final project of RN-02 Course. Build base-on CyperSoft's API
-Video Demo: https://youtu.be/wy0aceaJhpQ
+- The Final project of RN-02 Course. Build base-on CyperSoft's API
+- Video Demo: https://youtu.be/wy0aceaJhpQ
 # Main features
 ## User
 - Login
