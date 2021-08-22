@@ -82,7 +82,7 @@ export default function LoginScreen() {
                                     <TextInputIcon onChangeText={handleChange('email')}
                                         iconName='envelope'
                                         isError={errors.email}
-                                        placeholder={'hoangnttm@gmail.com'} />
+                                        placeholder={'Email'} />
                                     {errors.email && (
                                         <Text style={styles.errorText}>{errors.email}</Text>
                                     )}
