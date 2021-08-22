@@ -1,4 +1,4 @@
-import { ADD_TO_CART, REMOVE_FROM_CART, CART_CHANGED } from "../actions/cartAction"
+import { CLEAR_CART, ADD_TO_CART, REMOVE_FROM_CART, CART_CHANGED } from "../actions/cartAction"
 
 const initialState = {
     carts: [],
@@ -17,7 +17,6 @@ export default (state = initialState, { type, payload }) => {
             else {
                 state.carts.push(payload);
             }
-            
             state.isCartChanged = !state.isCartChanged;;
             return { ...state.carts, ...state };
         case REMOVE_FROM_CART:
@@ -27,8 +26,11 @@ export default (state = initialState, { type, payload }) => {
             }
             state.isCartChanged = !state.isCartChanged;
             return { ...state.carts, ...state, ...state.isCartChanged };
+        case CLEAR_CART:
+            state.carts = [];
+            state.isCartChanged = !state.isCartChanged;
+            return { ...state, ...state.isCartChanged };
         case CART_CHANGED:
-            console.log(state);
             state.isCartChanged = payload;
             return { ...state.carts, ...state };
         default:

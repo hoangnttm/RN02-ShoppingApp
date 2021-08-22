@@ -16,6 +16,7 @@ import { useNavigation } from '@react-navigation/native';
 import TextInputIcon from '../../component/TextInput';
 import globalStyles from '../../theme/globalStyles';
 import { Dropdown } from 'react-native-element-dropdown';
+import ModalMessage from '../../component/ModalMessage/index'
 
 const loginSchema = Yup.object().shape({
     email: Yup.string()
@@ -33,18 +34,28 @@ const loginSchema = Yup.object().shape({
     gender: Yup.boolean().required('Lựa chọn giới tính'),
 
 });
-const handleSubmitFormik = values => {
-    const data = { ...values, phone: null }
-    console.log(data);
-    userSignUp(data)
-        .then(res => { console.log(res); })
-        .catch(err => console.log(err));
-};
 
 export default function SignupScreen() {
     const navigation = useNavigation();
     const data = [{ label: 'Male', value: true },
     { label: 'Female', value: false }];
+    const [dropdown, setDropdown] = useState(null);
+    const [modalVisible, setModalVisible] = useState(false);
+    const [modalVisibleFalse, setModalVisibleFalse] = useState(false);
+
+
+    const handleSubmitFormik = values => {
+        const data = { ...values, phone: null }
+        console.log(data);
+        userSignUp(data)
+            .then(res => {
+                console.log(res);
+                setModalVisible(true);
+
+            })
+            .catch(err => setModalVisibleFalse(true));
+    };
+
 
     const navigateLogin = () => {
         if (navigation.canGoBack) {
@@ -54,10 +65,39 @@ export default function SignupScreen() {
             navigation.navigate('LoginScreen');
         }
     }
-    const [dropdown, setDropdown] = useState(null);
-
+    useEffect(() => {
+        if (modalVisibleFalse) {
+            var timer1 = setTimeout(() => {
+                setModalVisibleFalse(false);
+            }, 800);
+        }
+        return () => {
+            clearTimeout(timer1);
+        }
+    }, [modalVisibleFalse])
+    useEffect(() => {
+        if (modalVisible) {
+            var timer = setTimeout(() => {
+                setModalVisible(false);
+                navigateLogin();
+            }, 800);
+        }
+        return () => {
+            clearTimeout(timer);
+        }
+    }, [modalVisible])
     return (
         <SafeAreaView style={styles.container}>
+            <ModalMessage animationType="fade"
+                visible={modalVisible}
+                message='Đăng ký thành công'
+                icon='clipboard-check'
+            ></ModalMessage>
+        <ModalMessage animationType="fade"
+                visible={modalVisibleFalse}
+                message='Thất bại'
+                icon='window-close'
+            ></ModalMessage>
             <LinearGradient colors={['#F05C00', '#F18A00']} style={globalStyles.linearGradient}>
                 <View style={globalStyles.logoContainer}>
                     <View >
@@ -73,7 +113,7 @@ export default function SignupScreen() {
                     validationSchema={loginSchema}
                     initialValues={{ name: '', email: '', password: '', passwordRepeat: '', gender: null }}
                     onSubmit={handleSubmitFormik}>
-                    {({ values, handleSubmit, handleChange, errors ,setFieldValue}) => (
+                    {({ values, handleSubmit, handleChange, errors, setFieldValue }) => (
                         <>
                             <View style={styles.inputContainer}>
 
@@ -134,7 +174,7 @@ export default function SignupScreen() {
                                         label="Dropdown"
                                         placeholder="Select item"
                                         value={dropdown}
-                                        onChange={(item)=>setFieldValue('gender',item.value)}
+                                        onChange={(item) => setFieldValue('gender', item.value)}
                                         textError="Error"
                                     />
                                 </View>

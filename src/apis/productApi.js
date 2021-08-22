@@ -34,13 +34,15 @@ export const getProductfavoriteAPI = () => {
         headers: { Authorization: `Bearer ${token}` }
     });
 }
-export const likeProductAPI = (productId) => {
+export const likeProductAPI = ({id}) => {
+    console.log("likeProductAPI");
+    console.log(id);
     var state = store.getState();
     var token = getAccessTokenSelector(state);
     return axios({
         url: `http://svcy3.myclass.vn/api/Users/like`,
         method: 'GET',
-        params: { productId },
+        params: { productId:id },
         headers: { Authorization: `Bearer ${token}` }
     });
 }
@@ -64,7 +66,7 @@ export const orderAPI = (products) => {
     };
     console.info(_data);
     return axios({
-        url: 'http://svcy3.myclass.vn/api/Users/updateProfile',
+        url: 'http://svcy3.myclass.vn/api/Users/order',
         method: 'POST',
         data: _data,
     });

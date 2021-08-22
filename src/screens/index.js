@@ -9,6 +9,7 @@ import DiscoveryScreen from "./DiscoveryScreen";
 import FavoriteScreen from "./FavoriteProductScreen";
 import ProductDetail from "./CategoryScreen/ProductDetail";
 import UserInfo from './UserProfileScreen/UserInfo'
+import HistoryOrder from './UserProfileScreen/HistoryOrder'
 
 export {
     LoginScreen,
@@ -21,5 +22,6 @@ export {
     DiscoveryScreen,
     FavoriteScreen,
     ProductDetail,
-    UserInfo
+    UserInfo,
+    HistoryOrder    
 }
